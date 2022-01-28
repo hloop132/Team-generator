@@ -24,7 +24,7 @@ const engineerQuestion = [
 ];
 const internQuestion = [
   {
-    type: "list",
+    type: "input",
     message: "What school is the intern attending?",
     name: "school",
   },
@@ -39,10 +39,9 @@ const managerQuestion = [
 
 const addEmployee = [
   {
-    type: "list",
+    type: "confirm",
     message: "Would you like to add a new employee?",
     name: "newEmployee",
-    choices: ["Yes", "No"],
   },
 ];
 
@@ -72,95 +71,83 @@ const employeeQuestions = () => {
       },
     ])
     .then(function (employeeAnswers) {
-      if (employeeAnswers.Role === "Engineer") {
+      if (employeeAnswers.role === "Engineer") {
         inquirer.prompt(engineerQuestion).then(function ({ github }) {
-          console.log(github);
-          console.log(employeeAnswers);
+          // console.log(github);
+          // console.log(employeeAnswers);
           inquirer.prompt(addEmployee).then(function ({ newEmployee }) {
-            console.log(newEmployee);
-            if (newEmployee === "Yes") {
-              employeeQuestions();
-            }
-            team.push(new (team.name, team.id, team.email, team.github)());
-          });
-        });
-      } else if (employeeAnswers.Role === "Intern") {
-        inquirer.prompt(internQuestion).then(function ({ school }) {
-          console.log(school);
-          console.log(employeeAnswers);
-          inquirer.prompt(addEmployee).then(function ({ newEmployee }) {
-            console.log(newEmployee);
-            if (newEmployee === "Yes") {
-              employeeQuestions();
-            }
-            team.push(new (team.name, team.id, team.email, team.school)());
-          });
-        });
-      } else {
-        inquirer.prompt(managerQuestion).then(function ({ officeNumber }) {
-          console.log(officeNumber);
-          console.log(employeeAnswers);
-          inquirer.prompt(addEmployee).then(function ({ newEmployee }) {
-            console.log(newEmployee);
-            if (newEmployee === "Yes") {
-              employeeQuestions();
-            }
+            // console.log(newEmployee);
             team.push(
-              new (team.name, team.id, team.email, team.officeNumber)()
+              new Engineer(
+                employeeAnswers.name,
+                employeeAnswers.id,
+                employeeAnswers.email,
+                employeeAnswers.github
+              )
             );
+
+            if (newEmployee) {
+              employeeQuestions();
+            } else {
+              writeFile();
+            }
+          });
+        });
+      } else if (employeeAnswers.role === "Intern") {
+        inquirer.prompt(internQuestion).then(function ({ school }) {
+          // console.log(school);
+          // console.log(employeeAnswers);
+          inquirer.prompt(addEmployee).then(function ({ newEmployee }) {
+            // console.log(newEmployee);
+            team.push(
+              new Intern(
+                employeeAnswers.name,
+                employeeAnswers.id,
+                employeeAnswers.email,
+                employeeAnswers.school
+              )
+            );
+            if (newEmployee) {
+              employeeQuestions();
+            } else {
+              writeFile();
+            }
+          });
+        });
+      } else if (employeeAnswers.role === "Manager") {
+        inquirer.prompt(managerQuestion).then(function ({ officeNumber }) {
+          // console.log(officeNumber);
+          // console.log(employeeAnswers);
+          inquirer.prompt(addEmployee).then(function ({ newEmployee }) {
+            // console.log(newEmployee); 
+            team.push(
+              new Manager(
+                employeeAnswers.name,
+                employeeAnswers.id,
+                employeeAnswers.email,
+                employeeAnswers.officeNumber
+              )
+            );
+            if (newEmployee) {
+              employeeQuestions();
+            } else {
+              writeFile();
+            }
           });
         });
       }
     });
 };
 
-function generateHtml() {
-  let html = "";
-  for (j = 0; j < maxTimes; j++) {
-    console.log(team[j]);
-    html += `   <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>My Team</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/c502137733.js"></script>
-</head>
-
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 jumbotron mb-3 team-heading">
-                <h1 class="text-center">My Team</h1>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="team-area col-12 d-flex justify-content-center">
-                ${generateHTML(team)}
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-`;
-
-    console.log(team);
-    const fs = require("fs");
-    fs.writeFile("index.html", generateHTML, function (err) {
-      if (err) throw err;
-      console.log("File has been created");
-    });
-  }
+// console.log(team);
+function writeFile() {
+  fs.writeFile("index.html", generateHTML(team), function (err) {
+    if (err) throw err;
+    // console.log("File has been created");
+  });
 }
-// generateHTML()
-employeeQuestions()
+
+employeeQuestions();
 
 // first parameter is the path to the file you want to create
 // second parameter is the string you want to write to the file
