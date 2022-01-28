@@ -19,4 +19,4 @@ Megan, Denise, and myself for trying so damn hard and not giving up
 None
 
 ## Demo
-![load page](./assests/teamGenerator.gif)
+![load page](./Assests/teamGenerator.gif)
