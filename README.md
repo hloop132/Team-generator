@@ -1,20 +1,20 @@
 ### Team Profile Generator
 
-## description
-a generator to add members of your team, emails, ids, github, office number, and school attending.
+## Description
+A generator to add members of your team, emails, ids, github, office number, and school attending.
 
-## instructions
-enter the employees name, id, email, and what position they are (manager, engineer, or student) then depending on their status a question pertaining to that status will pop up. answer that question and then you will have the coice to add another employee or stop. the employees info will then be stored and displayed on a card.
+## Instructions
+Enter the employees name, id, email, and what position they are (manager, engineer, or student) then depending on their status a question related to that status will pop up. Answer that question and then you will have the choice to add another employee or stop. The employees info will then be stored and displayed on a card.
 
-## technologies
+## Technologies
 node js
 
-## project status
-still under construction
+## Project Status
+Still under construction
 
-## contributions
-megan, denise, and muyself for trying so damn hard and not giving up
+## Contributions
+Megan, Denise, and myself for trying so damn hard and not giving up
 
-## licence 
+## Licence 
 none
 
