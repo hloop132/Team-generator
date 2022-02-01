@@ -13,7 +13,8 @@ node js
 Finished
 
 ## Contributions
-Megan, Denise, and myself for trying so damn hard and not giving up
+
+Brett, Megan, Denise, and myself for trying so damn hard and not giving up
 
 ## Licence 
 None
